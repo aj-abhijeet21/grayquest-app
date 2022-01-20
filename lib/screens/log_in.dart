@@ -24,25 +24,22 @@ class _LogInPageState extends State<LogInPage> {
       TextEditingController();
   final TextEditingController passwordEditingController =
       TextEditingController();
-
-  // Future<http.Response> getUser(String username) async {
-  //   UserProvider provider = Provider.of<UserProvider>(context, listen: false);
-  //   var url =
-  //       Uri.parse('https://jsonplaceholder.typicode.com/users?name=$username');
-  //   var response = await http.get(url);
-  //   // print(response.body);
-  //   return response;
-  // }
+  int userId = 0;
 
   void getUserFromApi(String username) async {
     UserProvider provider = Provider.of<UserProvider>(context, listen: false);
-    var url =
-        Uri.parse('https://jsonplaceholder.typicode.com/users?name=$username');
+    var url = Uri.parse(
+        'https://jsonplaceholder.typicode.com/users?username=$username');
     var response = await http.get(url);
+
     setState(() {
       var jsonData = jsonDecode(response.body);
-      UserDetails user = UserDetails.fromJson(jsonData);
-      provider.setUser(user);
+      // Map<String, dynamic> jsonData = jsonDecode(response.body);
+      // UserDetails user = UserDetails.fromJson(jsonData[0]);
+      userId = jsonData[0]['id'];
+      print(jsonData[0]);
+      // UserDetails.fromJson(jsonData[0]);
+      provider.setUser(userId);
     });
   }
 
@@ -98,10 +95,26 @@ class _LogInPageState extends State<LogInPage> {
             const SizedBox(
               height: 5,
             ),
-            TextFieldWidget(
+            TextField(
+              obscureText: true,
               controller: passwordEditingController,
-              hintText: 'Enter your password',
               maxLines: 1,
+              decoration: InputDecoration(
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide.none,
+                ),
+                hintText: 'Enter your password',
+                hintStyle: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white.withOpacity(0.5),
+                ),
+                fillColor: const Color(0xFF414141),
+              ),
+              style: const TextStyle(
+                color: Colors.white,
+              ),
             ),
             const SizedBox(
               height: 40,
@@ -145,8 +158,8 @@ class _LogInPageState extends State<LogInPage> {
     {
       String userName = usernameEditingController.text.trim();
       String password = passwordEditingController.text.trim();
-      print(userName);
-      print(password);
+      // print(userName);
+      // print(password);
       bool loginSuccessful =
           await dbHelper.authenticateUser(userName, password);
       if (loginSuccessful) {
@@ -155,13 +168,16 @@ class _LogInPageState extends State<LogInPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => const HomePage(),
           ),
         );
       } else {
-        AlertDialog(
-          title: Text('Login failed'),
-          content: Text('Please check email/password'),
+        showDialog(
+          context: context,
+          builder: (_) => const AlertDialog(
+            title: Text('Login failed'),
+            content: Text('Please check email/password'),
+          ),
         );
       }
     }

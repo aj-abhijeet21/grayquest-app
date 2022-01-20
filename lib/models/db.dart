@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:sqflite/sqflite.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:path/path.dart';
 
@@ -99,9 +96,6 @@ class DatabaseManager {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
     return await openDatabase(path, version: 1, onCreate: _onCreate);
-    // Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    // String path = join(documentsDirectory.path, _dbName);
-    // return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future close() async {
@@ -128,7 +122,7 @@ class DatabaseManager {
       },
     );
     var result = batch.commit();
-    print(result);
+    // print(result);
   }
 
   Future<bool> authenticateUser(
@@ -140,7 +134,7 @@ class DatabaseManager {
       where: '${UserFields.username} = ?',
       whereArgs: [username],
     );
-    print('select query result $maps');
+    // print('select query result $maps');
     String? passwordFromDb = '';
 
     if (maps.isNotEmpty) {

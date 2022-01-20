@@ -4,8 +4,12 @@ import 'package:grayquest_app/models/models.dart';
 class UserProvider extends ChangeNotifier {
   int userId = 1;
 
-  void setUser(UserDetails user) {
-    userId = user.userId;
+  void setUser(int user) {
+    userId = user;
     notifyListeners();
+  }
+
+  int getUserId() {
+    return userId;
   }
 }

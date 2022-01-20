@@ -48,12 +48,13 @@ class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-        leading: BackButton(),
-        backgroundColor: Color(0xFF191919),
+        leading: const BackButton(),
+        backgroundColor: const Color(0xFF191919),
         elevation: 0,
-        title: Text(
+        title: const Text(
           'Create Post',
           style: TextStyle(
             fontSize: 24,
@@ -67,7 +68,7 @@ class _CreatePostState extends State<CreatePost> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Title',
               style: TextStyle(
                 fontSize: 20,
@@ -75,7 +76,7 @@ class _CreatePostState extends State<CreatePost> {
                 color: Colors.white,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             TextFieldWidget(
@@ -83,10 +84,10 @@ class _CreatePostState extends State<CreatePost> {
               hintText: '',
               maxLines: 1,
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
-            Text(
+            const Text(
               'Post',
               style: TextStyle(
                 fontSize: 20,
@@ -94,7 +95,7 @@ class _CreatePostState extends State<CreatePost> {
                 color: Colors.white,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             TextFieldWidget(
@@ -102,7 +103,7 @@ class _CreatePostState extends State<CreatePost> {
               hintText: '',
               maxLines: 5,
             ),
-            SizedBox(
+            const SizedBox(
               height: 28,
             ),
             Center(
@@ -129,6 +130,7 @@ class _CreatePostState extends State<CreatePost> {
                     title,
                     body,
                   );
+                  Navigator.of(context).pop();
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(vertical: 13, horizontal: 22),
@@ -157,10 +159,11 @@ class _CreatePostState extends State<CreatePost> {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonData,
+      body: jsonEncode(jsonData),
     );
 
-    if (response.statusCode == 200) {
+    print(response.statusCode);
+    if (response.statusCode == 201) {
       print('Post created successfully');
     } else {
       print(response.body);

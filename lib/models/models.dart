@@ -81,10 +81,10 @@ class Post {
 
   Map<String, dynamic> toJson() {
     return {
+      'userId': userId,
+      'id': postId,
       'title': title,
       'body': body,
-      'id': postId,
-      'userId': userId,
     };
   }
 }

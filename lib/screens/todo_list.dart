@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:grayquest_app/models/models.dart';
 import 'package:grayquest_app/models/user_provider.dart';
 import 'package:grayquest_app/utils.dart';
-import 'package:grayquest_app/widgets/bottom_nav_bar.dart';
 import 'package:grayquest_app/widgets/header_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -21,8 +20,9 @@ class _TodoListState extends State<TodoList> {
 
   Future<http.Response> getTasks() async {
     UserProvider provider = Provider.of<UserProvider>(context, listen: false);
-    var url = Uri.parse(
-        'https://jsonplaceholder.typicode.com/users/${provider.userId}/todos');
+    int userId = provider.getUserId();
+    var url =
+        Uri.parse('https://jsonplaceholder.typicode.com/users/$userId/todos');
     var response = await http.get(url);
     // print(response.body);
     return response;
@@ -49,6 +49,7 @@ class _TodoListState extends State<TodoList> {
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,6 +69,7 @@ class _TodoListState extends State<TodoList> {
 
   Widget buildTasks() {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: taskList.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
@@ -79,25 +81,25 @@ class _TodoListState extends State<TodoList> {
   Widget buildTaskCard(Todo task) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 25,
         right: 25,
         bottom: 16,
       ),
-      padding: EdgeInsets.all(20),
-      color: Color(0xFF191919),
+      padding: const EdgeInsets.all(20),
+      color: const Color(0xFF191919),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             task.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(
@@ -105,7 +107,7 @@ class _TodoListState extends State<TodoList> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,
-              color: task.isCompleted ? primaryColor : Color(0xFFB66857),
+              color: task.isCompleted ? primaryColor : const Color(0xFFB66857),
             ),
           ),
         ],

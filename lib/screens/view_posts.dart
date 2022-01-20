@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:grayquest_app/models/models.dart';
 import 'package:grayquest_app/screens/create_post.dart';
 import 'package:grayquest_app/screens/view_comments.dart';
 import 'package:grayquest_app/utils.dart';
-import 'package:grayquest_app/widgets/bottom_nav_bar.dart';
 import 'package:grayquest_app/widgets/header_widget.dart';
 import 'package:http/http.dart' as http;
 
@@ -53,16 +51,16 @@ class _ViewPostsState extends State<ViewPosts> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CreatePost(),
+              builder: (context) => const CreatePost(),
             ),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         child: Column(
           children: [
             HeaderWidget(
@@ -81,7 +79,7 @@ class _ViewPostsState extends State<ViewPosts> {
 
   Widget buildPosts() {
     return ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: postList.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
@@ -92,19 +90,19 @@ class _ViewPostsState extends State<ViewPosts> {
   Widget buildPostCard(Post post) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 25,
         right: 25,
         bottom: 28,
       ),
-      padding: EdgeInsets.all(20),
-      color: Color(0xFF191919),
+      padding: const EdgeInsets.all(20),
+      color: const Color(0xFF191919),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             post.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.white,
@@ -112,13 +110,13 @@ class _ViewPostsState extends State<ViewPosts> {
           ),
           Text(
             post.body,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 4,
           ),
           GestureDetector(
@@ -132,7 +130,7 @@ class _ViewPostsState extends State<ViewPosts> {
                 ),
               );
             },
-            child: Text(
+            child: const Text(
               'view comments',
               style: TextStyle(
                 fontSize: 14,

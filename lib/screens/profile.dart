@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:grayquest_app/models/models.dart';
 import 'package:grayquest_app/models/user_provider.dart';
-import 'package:grayquest_app/widgets/bottom_nav_bar.dart';
+import 'package:grayquest_app/screens/log_in.dart';
+import 'package:grayquest_app/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,6 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile> {
   UserDetails? user;
-
   // UserDetails getUser() {
   //   UserProvider provider = Provider.of<UserProvider>(context, listen: false);
 
@@ -25,20 +25,25 @@ class _UserProfileState extends State<UserProfile> {
 
   Future<http.Response> getUser() async {
     UserProvider provider = Provider.of<UserProvider>(context, listen: false);
-    var url = Uri.parse(
-        'https://jsonplaceholder.typicode.com/users/${provider.userId}');
+    int userId = provider.getUserId();
+    var url = Uri.parse('https://jsonplaceholder.typicode.com/users/$userId');
     var response = await http.get(url);
-    print(response.body);
+    // print(response.body);
     return response;
   }
 
   void getUserDetailsFromApi() {
     getUser().then((response) {
       setState(() {
-        Iterable jsonData = jsonDecode(response.body);
+        // Map<String, dynamic> jsonData = jsonDecode(response.body);
+        var jsonData = jsonDecode(response.body);
 
-        user =
-            jsonData.map((user) => UserDetails.fromJson(user)).toList().first;
+        user = UserDetails.fromJson(jsonData);
+
+        // jsonData
+        //     .map((userDetails) => UserDetails.fromJson(userDetails))
+        //     .toList()
+        //     .first;
       });
     });
   }
@@ -91,19 +96,57 @@ class _UserProfileState extends State<UserProfile> {
             const SizedBox(
               height: 38,
             ),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'LOG OUT',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.white.withOpacity(0.6),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 75.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all(primaryColor),
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        textStyle: MaterialStateProperty.all(
+                          const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      onPressed: logout,
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                        child: Text('LOG OUT'),
+                      ),
+                    ),
+                  ),
+                ],
               ),
+            ),
+            const SizedBox(
+              height: 38,
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  logout() async {
+    UserProvider provider = Provider.of<UserProvider>(context, listen: false);
+    provider.userId = 0;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LogInPage(),
       ),
     );
   }

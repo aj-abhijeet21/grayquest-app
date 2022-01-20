@@ -47,12 +47,12 @@ class _ViewPhotosState extends State<ViewPhotos> {
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-        leading: BackButton(color: Colors.white),
-        backgroundColor: Color(0xFF191919),
+        leading: const BackButton(color: Colors.white),
+        backgroundColor: const Color(0xFF191919),
         elevation: 0,
         title: Text(
           widget.albumName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.w400,
             color: Colors.white,
@@ -61,7 +61,7 @@ class _ViewPhotosState extends State<ViewPhotos> {
       ),
       body: Container(
         child: SingleChildScrollView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           child: buildPhotosView(),
         ),
       ),
@@ -70,7 +70,7 @@ class _ViewPhotosState extends State<ViewPhotos> {
 
   Widget buildPhotosView() {
     return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: photosList.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
@@ -82,12 +82,12 @@ class _ViewPhotosState extends State<ViewPhotos> {
   Widget buildPhotoCard(Photo photo) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 25,
         right: 25,
         bottom: 16,
       ),
-      color: Color(0xFF191919),
+      color: const Color(0xFF191919),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -96,10 +96,10 @@ class _ViewPhotosState extends State<ViewPhotos> {
             fit: BoxFit.fitWidth,
           ),
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Text(
               photo.title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 color: Colors.white,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:grayquest_app/models/models.dart';
 import 'package:grayquest_app/models/user_provider.dart';
 import 'package:grayquest_app/screens/view_photos.dart';
-import 'package:grayquest_app/widgets/bottom_nav_bar.dart';
 import 'package:grayquest_app/widgets/header_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -21,8 +20,9 @@ class _ViewAlbumsState extends State<ViewAlbums> {
 
   Future<http.Response> getAlbums() async {
     UserProvider provider = Provider.of<UserProvider>(context, listen: false);
-    var url = Uri.parse(
-        'https://jsonplaceholder.typicode.com/users/${provider.userId}/albums');
+    int userId = provider.getUserId();
+    var url =
+        Uri.parse('https://jsonplaceholder.typicode.com/users/$userId/albums');
     var response = await http.get(url);
     // print(response.body);
     return response;
@@ -49,7 +49,7 @@ class _ViewAlbumsState extends State<ViewAlbums> {
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
       body: SingleChildScrollView(
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +70,7 @@ class _ViewAlbumsState extends State<ViewAlbums> {
 
   Widget buildAlbums() {
     return ListView.builder(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: albumList.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
@@ -82,13 +82,13 @@ class _ViewAlbumsState extends State<ViewAlbums> {
   Widget buildAlbumCard(Album album) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         left: 25,
         right: 25,
         bottom: 16,
       ),
-      padding: EdgeInsets.all(20),
-      color: Color(0xFF191919),
+      padding: const EdgeInsets.all(20),
+      color: const Color(0xFF191919),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -97,7 +97,7 @@ class _ViewAlbumsState extends State<ViewAlbums> {
             child: Text(
               album.title,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w400,
                 color: Colors.white,
@@ -118,7 +118,7 @@ class _ViewAlbumsState extends State<ViewAlbums> {
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_forward_ios_outlined,
                 color: Colors.white,
               ),
