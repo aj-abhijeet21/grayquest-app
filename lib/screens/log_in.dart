@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grayquest_app/models/db.dart';
-import 'package:grayquest_app/models/models.dart';
 import 'package:grayquest_app/models/user_provider.dart';
 import 'package:grayquest_app/screens/home.dart';
-import 'package:grayquest_app/screens/view_posts.dart';
 import 'package:grayquest_app/utils.dart';
 import 'package:grayquest_app/widgets/textfield_widget.dart';
 import 'package:provider/provider.dart';

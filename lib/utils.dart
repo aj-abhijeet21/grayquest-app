@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqflite.dart';
 
 Map<int, Color> greenColor = {
   50: Color.fromRGBO(87, 182, 95, .1),

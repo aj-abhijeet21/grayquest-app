@@ -96,39 +96,30 @@ class _UserProfileState extends State<UserProfile> {
             const SizedBox(
               height: 38,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 75.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        backgroundColor:
-                            MaterialStateProperty.all(primaryColor),
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                        textStyle: MaterialStateProperty.all(
-                          const TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      onPressed: logout,
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
-                        ),
-                        child: Text('LOG OUT'),
-                      ),
+            Center(
+              child: TextButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                ],
+                  backgroundColor: MaterialStateProperty.all(primaryColor),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                  textStyle: MaterialStateProperty.all(
+                    const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                onPressed: logout,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 25.0,
+                  ),
+                  child: Text('LOG OUT'),
+                ),
               ),
             ),
             const SizedBox(
@@ -240,7 +231,7 @@ class _UserProfileState extends State<UserProfile> {
           ),
           buildUserDetail(
             'Password',
-            'Shishir',
+            user.name,
           ),
           SizedBox(
             height: 18,
@@ -280,7 +271,6 @@ class _UserProfileState extends State<UserProfile> {
               fontSize: 18,
               fontWeight: FontWeight.w400,
               color: Colors.white,
-              fontFamily: 'Nova',
             ),
           ),
         ),
